@@ -1,5 +1,8 @@
-
-<div class="lesdeux">
-        <div class="lepremier"><span><img (click)="startFabrication()" class="round" [attr.src]="server+product.logo" /></span></div>
+<div class="row">
+    <div class="col-xs-3">
+<div (click)="startFabrication()" class="progress, lesecond" #bar [ngStyle]="{'background-image':'url('+server+product.logo+')','background-size':'cover'}"> </div>
 </div>
+</div>
+
+
 

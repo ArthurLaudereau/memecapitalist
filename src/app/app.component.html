@@ -6,17 +6,23 @@
   <span><img [attr.src]="server+world.logo" /></span>
 </div>
 <div> <span [innerHTML]="world.money | bigvalue"> </span></div>
-
-<app-product [serv]="server" [prod]="world.products.product[0]"
-class="product col-md-6"></app-product>
-<app-product [serv]="server" [prod]="world.products.product[1]"
-class="product col-md-6"></app-product>
-<app-product [serv]="server" [prod]="world.products.product[2]"
-class="product col-md-6"></app-product>
-<app-product [serv]="server" [prod]="world.products.product[3]"
-class="product col-md-6"></app-product>
-<app-product [serv]="server" [prod]="world.products.product[4]"
-class="product col-md-6"></app-product>
-<app-product [serv]="server" [prod]="world.products.product[5]"
-class="product col-md-6"></app-product>
-
+<div class="container-fluid">
+  <div class="row">
+      <app-product [serv]="server" [prod]="world.products.product[0]"
+      class="product col-md-6"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[1]"
+      class="product col-md-6"></app-product>
+  </div>
+  <div class="row">
+      <app-product [serv]="server" [prod]="world.products.product[2]"
+      class="product col-md-6"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[3]"
+      class="product col-md-6"></app-product>
+  </div>
+  <div class="row">
+      <app-product [serv]="server" [prod]="world.products.product[4]"
+      class="product col-md-6"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[5]"
+      class="product col-md-6"></app-product>
+  </div>
+</div>
