@@ -1,2 +1,29 @@
 <app-product [prod]="world.products.product[0]"
-class="product col-md-6"></app-product>
+class="product col-md-6" (click)="startFabrication()"></app-product>
+
+<div class="lesdeux">
+  <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[0].logo" /></span></div>
+  <div class="lesecond"><span [innerHTML]="world.money | bigvalue"> </span></div>
+</div>
+<div class="lesdeux">
+  <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[1].logo" /></span></div>
+  <div class="lesecond"><span [innerHTML]="world.money | bigvalue"> </span></div>
+</div>
+<div class="lesdeux">
+  <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[2].logo" /></span></div>
+  <div class="lesecond"><span [innerHTML]="world.money | bigvalue"> </span></div>
+</div>
+<div class="lesdeux">
+  <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[3].logo" /></span></div>
+  <div class="lesecond"><span [innerHTML]="world.money | bigvalue"> </span></div>
+</div>
+<div class="lesdeux">
+  <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[4].logo" /></span></div>
+  <div class="lesecond"><span [innerHTML]="world.money | bigvalue"> </span></div>
+</div>
+<div class="lesdeux">
+  <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[5].logo" /></span></div>
+  <div class="lesecond"><span [innerHTML]="world.money | bigvalue"> </span></div>
+</div>
+  
+<div class="progress" #bar> </div>
