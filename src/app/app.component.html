@@ -7,22 +7,16 @@
 </div>
 <div> <span [innerHTML]="world.money | bigvalue"> </span></div>
 
-<div class="lesdeux">
-    <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[0].logo" /></span></div>
-</div>
-<div class="lesdeux">
-    <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[1].logo" /></span></div>
-</div>
-<div class="lesdeux">
-    <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[2].logo" /></span></div>
-</div>
-<div class="lesdeux">
-    <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[3].logo" /></span></div>
-</div>
-<div class="lesdeux">
-    <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[4].logo" /></span></div>
-</div>
-<div class="lesdeux">
-    <div class="lepremier"><span><img class="round" [attr.src]="server+world.products.product[5].logo" /></span></div>
-</div>
+<app-product [serv]="server" [prod]="world.products.product[0]"
+class="product col-md-6"></app-product>
+<app-product [serv]="server" [prod]="world.products.product[1]"
+class="product col-md-6"></app-product>
+<app-product [serv]="server" [prod]="world.products.product[2]"
+class="product col-md-6"></app-product>
+<app-product [serv]="server" [prod]="world.products.product[3]"
+class="product col-md-6"></app-product>
+<app-product [serv]="server" [prod]="world.products.product[4]"
+class="product col-md-6"></app-product>
+<app-product [serv]="server" [prod]="world.products.product[5]"
+class="product col-md-6"></app-product>
 

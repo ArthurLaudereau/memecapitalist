@@ -8,9 +8,15 @@ import { Product } from '../world';
 })
 export class ProductComponent implements OnInit {
   product: Product;
+  server: any;
+  
   @Input()
   set prod(value: Product) {
     this.product = value;
+  }
+  @Input()
+  set serv(value: any){
+    this.server = value;
   }
   constructor() { }
 
