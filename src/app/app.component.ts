@@ -10,6 +10,7 @@ import { World, Product, Pallier } from './world';
 export class AppComponent {
   title = 'app';
   world: World = new World();
+  product: Product = new Product();
   server: string;
   constructor(private service: RestserviceService) {
   this.server = service.getServer();
@@ -19,5 +20,8 @@ export class AppComponent {
     });
     }
    
-
+onProductionDone(p: Product){
+  this.world.money += p.revenu*p.quantite;
+  this.world.score += p.revenu*p.quantite;
+}
 }
