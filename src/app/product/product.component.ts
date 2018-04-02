@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { World, Product } from '../world';
 
+
 declare var require;
 const ProgressBar = require("progressbar.js");
 
@@ -31,10 +32,16 @@ export class ProductComponent implements OnInit {
     this._qtmulti = value;
     if (this._qtmulti && this.product) this.calcMaxCanBuy();
   }
+  
+  @Input()   
+  set money(value: any) {
+      this._money = value;    
+  }
 
   @Input()
     set prod(value: Product) {
       this.product = value;
+      this.PT=value.cout;
     }
     @Input()
     set serv(value: any) {
@@ -45,6 +52,22 @@ export class ProductComponent implements OnInit {
 
 
     constructor() { }
+
+    ngOnInit() {
+      this.progressbar = new
+        ProgressBar.Circle(this.progressBarItem.nativeElement, {
+          strokeWidth: 5, color: '#FFEA82', trailColor: '#eee',
+          trailWidth: 1,
+          from: { color: '#ffff66' },
+          to: { color: '#00cc66' },
+          // Set default step function for all animate calls
+          step: (state, bar) => {
+            bar.path.setAttribute('stroke', state.color);
+          }
+        });
+
+      setInterval(() => { this.calcScore(); }, 100);
+    }
 
     startFabrication() {
       if (this.product.timeleft <= 0) {
@@ -66,67 +89,43 @@ export class ProductComponent implements OnInit {
       switch(this._qtmulti){
         case "x1" : 
           this.NBachat = 1;
-          this.PT = this.product.cout*this.product.croissance^this.product.quantite;
-          //return (this.NBachat,this.PP); on réutilisera ces valeurs
+          this.PT = this.product.cout*(this.product.croissance**this.product.quantite);
           this.chCanBuy();
           break;
         case "x10" : 
           this.NBachat = 10;
-          this.PT = this.product.cout*this.product.croissance^this.NBachat;
+          this.PT = this.product.cout*this.product.croissance**this.NBachat;
           this.chCanBuy();
           break;
         case "x100" : 
           this.NBachat = 100;
-          this.PT = this.product.cout*this.product.croissance^this.NBachat;
+          this.PT = this.product.cout*this.product.croissance**this.NBachat;
           this.chCanBuy();
           break;
         case "xMax":
-        this.NBachat = 0;
-        this.PT = this.product.cout*this.product.croissance^this.NBachat;
-          while (this.world.money>=this.PT){
-            this.NBachat = this.NBachat+1;
-            this.PT = this.PT*this.product.croissance;
-          }
+        this.NBachat = Math.floor(Math.log(this._money/(this.product.cout))/Math.log(this.product.croissance)); //floor pour arrondir, et prise en compte de la croissance a chaque niveau avec les logs
+        this.PT = this.product.cout*this.product.croissance**this.NBachat;
           this.chCanBuy();
           break;
         }
     }
     
-
-    ngOnInit() {
-      this.progressbar = new
-        ProgressBar.Circle(this.progressBarItem.nativeElement, {
-          strokeWidth: 5, color: '#FFEA82', trailColor: '#eee',
-          trailWidth: 1,
-          from: { color: '#ffff66' },
-          to: { color: '#00cc66' },
-          // Set default step function for all animate calls
-          step: (state, bar) => {
-            bar.path.setAttribute('stroke', state.color);
-          }
-        });
-
-      setInterval(() => { this.calcScore(); }, 100);
-
-      //continuer pour repositionner le cercle sur l'image
-    }
-
-
     calcScore() {
       if (this.product.timeleft > 0) {
         this.product.timeleft -= Date.now() - this.lastupdate;
         this.lastupdate = Date.now();}
 
       else if (this.product.timeleft < 0) {
-          this.product.timeleft = 0;
           this.progressbar.set(0);
+          this.product.timeleft = 0;
           // on prévient le composant parent que ce produit a généré son revenu.
-          this.notifyProduction.emit(this.product);
           if (this.lastupdate!=0){
             this.notifyProduction.emit(this.product);
             this.lastupdate=0;
             }
       }
+      this.chCanBuy();
+      this.calcMaxCanBuy();
     }
 
     chCanBuy(){
@@ -139,7 +138,8 @@ export class ProductComponent implements OnInit {
     buy(){
       if(this.canBuy){
         this.product.quantite+=this.NBachat;
-        this.notifyBuy.emit(this.PT)
+        //this._money-=this.PT
+        this.notifyBuy.emit(this.PT);
       }
     }
 

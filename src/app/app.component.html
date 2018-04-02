@@ -7,23 +7,25 @@
 </div>
 <div> <span [innerHTML]="world.money | bigvalue"> </span></div>
 <div><button type="button" (click)="changEtatBouton()">{{qt[qtmulti]}}</button></div>
+
+
 <div class="container-fluid">
   <div class="row">
-      <app-product [serv]="server" [prod]="world.products.product[0]" [qtmulti]="qt[qtmulti]" 
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-      <app-product [serv]="server" [prod]="world.products.product[1]" [qtmulti]="qt[qtmulti]"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[0]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[1]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
   </div>
   <div class="row">
-      <app-product [serv]="server" [prod]="world.products.product[2]" [qtmulti]="qt[qtmulti]"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-      <app-product [serv]="server" [prod]="world.products.product[3]" [qtmulti]="qt[qtmulti]"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[2]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[3]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
   </div>
   <div class="row">
-      <app-product [serv]="server" [prod]="world.products.product[4]" [qtmulti]="qt[qtmulti]"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
-      <app-product [serv]="server" [prod]="world.products.product[5]" [qtmulti]="qt[qtmulti]"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[4]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+      <app-product [serv]="server" [prod]="world.products.product[5]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
   </div>
 </div>

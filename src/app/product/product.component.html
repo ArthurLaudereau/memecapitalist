@@ -1,14 +1,16 @@
+<div>
+<button type="button" class="btn newbut">{{product.name}}</button><button type="button" class="btn newbut">{{product.quantite}}</button> 
+</div>
 <div class="row">
     <div class="col-xs-3">
 <div (click)="startFabrication()" class="progress, lesecond" #bar [ngStyle]="{'background-image':'url('+server+product.logo+')','background-size':'cover'}"> </div>
 </div>
 
 <div class="col-xs-12">
-    <button type="button" [ngClass]="{'disabled':!canBuy,'btn':true,'newbut':true}"  [innerHTML]="nbAfficher + 'x '+ (newcout | bigvalue)"
-    (click)="buy()"></button>
-      <br>
+    <button type="button" [ngClass]="{'disabled':!canBuy,'btn':true,'newbut':true}"  [innerHTML]="NBachat + 'x '+ ( PT |bigvalue )" (click)="buy()"></button>
     <button type="button" class="btn newbut">{{product.timeleft | date: 'mm:ss'}}</button>
 </div>
+
 
 
 

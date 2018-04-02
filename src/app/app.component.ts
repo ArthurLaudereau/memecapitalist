@@ -28,6 +28,11 @@ onProductionDone(p: Product){
   this.world.score += p.revenu*p.quantite;
 }
 
+onBuy(n: number){
+  this.world.money-=n;
+  this.world.score-=n;
+}
+
 changEtatBouton(){
   if (this.qtmulti==3){
     this.qtmulti=0;
