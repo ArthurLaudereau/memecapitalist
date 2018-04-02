@@ -12,6 +12,9 @@ export class AppComponent {
   world: World = new World();
   product: Product = new Product();
   server: string;
+  qtmulti= 0;
+  qt=["x1","x10","x100","xMax"];
+  
   constructor(private service: RestserviceService) {
   this.server = service.getServer();
   service.getWorld().then(
@@ -24,4 +27,15 @@ onProductionDone(p: Product){
   this.world.money += p.revenu*p.quantite;
   this.world.score += p.revenu*p.quantite;
 }
+
+changEtatBouton(){
+  if (this.qtmulti==3){
+    this.qtmulti=0;
+    console.log(this.qtmulti);
+  }else{
+    this.qtmulti+=1;
+    console.log(this.qtmulti);
+  }
+}
+
 }
