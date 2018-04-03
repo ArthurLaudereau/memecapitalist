@@ -124,6 +124,9 @@ export class ProductComponent implements OnInit {
             this.lastupdate=0;
             }
       }
+      if(this.product.managerUnlocked==true){
+        this.startFabrication();
+      }
       this.chCanBuy();
       this.calcMaxCanBuy();
     }
@@ -135,6 +138,7 @@ export class ProductComponent implements OnInit {
         this.canBuy = false;
       }
     }
+    
     buy(){
       if(this.canBuy){
         this.product.quantite+=this.NBachat;

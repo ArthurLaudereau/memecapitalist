@@ -14,6 +14,8 @@ export class AppComponent {
   server: string;
   qtmulti= 0;
   qt=["x1","x10","x100","xMax"];
+  //pallier: Pallier = new Pallier();
+  //seuil: number;
   
   constructor(private service: RestserviceService) {
   this.server = service.getServer();
@@ -41,6 +43,14 @@ changEtatBouton(){
     this.qtmulti+=1;
     console.log(this.qtmulti);
   }
+}
+
+hire(v: Pallier){
+   if(this.world.money>=v.seuil){ //PB on arrive pas à lire la variable seuil
+      v.unlocked=true; //on unlock le manager
+      this.world.products.product[v.idcible-1].managerUnlocked=true;
+      this.onBuy(v.seuil);
+    }
 }
 
 }

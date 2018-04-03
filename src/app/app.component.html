@@ -8,7 +8,26 @@
 <div> <span [innerHTML]="world.money | bigvalue"> </span></div>
 <div><button type="button" (click)="changEtatBouton()">{{qt[qtmulti]}}</button></div>
 
+<!-- managers -->
+<div class="buttonleft btn btn-primary btn-lg" data-toggle="modal" (click)="managersModal.show()" >Managers</div>
+<app-modal #managersModal>
+  <div class="app-modal-header">
+    <h4 class="modal-title">The crème of the crème</h4>
+  </div>
+  <div class="app-modal-body">
+    <div *ngFor="let manager of world.managers.pallier"> <!-- déclaration de la variable manger pour raccourcir! -->
+    <div><img [attr.src]="server+manager.logo" />
+      <span><b>{{manager.name}}</b></span> <span>{{world.products.product[manager.idcible-1].name}}</span> <span><b>{{manager.seuil}}</b> upvotes</span>
+      <button type="button" [ngClass]="{'disabled':!canBuy,'btn':true,'nouv':true}" (click)="hire()">Hire !</button>
+    </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+  <button type="button" class="btn btn-default" (click)="managersModal.hide()">Close</button>
+  </div>
+ </app-modal>
 
+ <!-- produits -->
 <div class="container-fluid">
   <div class="row">
       <app-product [serv]="server" [prod]="world.products.product[0]" [qtmulti]="qt[qtmulti]" [money]="world.money"
@@ -29,3 +48,4 @@
       class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
   </div>
 </div>
+

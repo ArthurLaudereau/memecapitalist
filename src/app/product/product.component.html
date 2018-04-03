@@ -1,5 +1,5 @@
 <div>
-<button type="button" class="btn newbut">{{product.name}}</button><button type="button" class="btn newbut">{{product.quantite}}</button> 
+<button type="button" class="btn nouv">{{product.name}}</button><button type="button" class="btn nouv">{{product.quantite}}</button> 
 </div>
 <div class="row">
     <div class="col-xs-3">
@@ -7,8 +7,8 @@
 </div>
 
 <div class="col-xs-12">
-    <button type="button" [ngClass]="{'disabled':!canBuy,'btn':true,'newbut':true}"  [innerHTML]="NBachat + 'x '+ ( PT |bigvalue )" (click)="buy()"></button>
-    <button type="button" class="btn newbut">{{product.timeleft | date: 'mm:ss'}}</button>
+    <button type="button" [ngClass]="{'disabled':!canBuy,'btn':true,'nouv':true}"  [innerHTML]="NBachat + 'x '+ ( PT |bigvalue )" (click)="buy()"></button>
+    <button type="button" class="btn nouv">{{product.timeleft | date: 'mm:ss'}}</button>
 </div>
 
 
