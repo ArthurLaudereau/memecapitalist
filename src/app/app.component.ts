@@ -17,6 +17,7 @@ export class AppComponent {
   //pallier: Pallier = new Pallier();
   //seuil: number;
   
+  
   constructor(private service: RestserviceService) {
   this.server = service.getServer();
   service.getWorld().then(
@@ -50,7 +51,21 @@ hire(v: Pallier){
       v.unlocked=true; //on unlock le manager
       this.world.products.product[v.idcible-1].managerUnlocked=true;
       this.onBuy(v.seuil);
+      console.log("c'est acheté");
+      if (v.unlocked=true){
+        this.isHidden(v);
+      }
     }
+}
+
+
+isHidden(v: Pallier){
+  if (v.unlocked==true){
+   return true;
+  }
+  else{
+    return false;
+  }
 }
 
 }

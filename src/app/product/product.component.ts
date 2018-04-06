@@ -75,7 +75,6 @@ export class ProductComponent implements OnInit {
         this.product.timeleft = this.product.vitesse;
         this.lastupdate = Date.now();
         //this.progressbar.set(progress); progress entre 0 et 1 pour set la progression de la barre manuellement
-        //this.service.putProduct(this.product); a voir plus tard
       }
     }
 
@@ -111,6 +110,10 @@ export class ProductComponent implements OnInit {
     }
     
     calcScore() {
+      if(this.product.managerUnlocked==true){
+        this.startFabrication();
+        this.notifyProduction.emit(this.product);
+      }
       if (this.product.timeleft > 0) {
         this.product.timeleft -= Date.now() - this.lastupdate;
         this.lastupdate = Date.now();}
@@ -123,9 +126,6 @@ export class ProductComponent implements OnInit {
             this.notifyProduction.emit(this.product);
             this.lastupdate=0;
             }
-      }
-      if(this.product.managerUnlocked==true){
-        this.startFabrication();
       }
       this.chCanBuy();
       this.calcMaxCanBuy();
