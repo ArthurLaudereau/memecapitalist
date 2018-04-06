@@ -23,9 +23,14 @@ export class ProductComponent implements OnInit {
   revenu: number;
   _qtmulti: string;
   _money: any;
+  _cout:any;
   PT:number;
   NBachat: number; 
   canBuy= false;
+  PTbis: number;
+  PTter: number;
+  PTqua: number;
+  qMax:any;
 
   @Input()
   set qtmulti(value: string) {
@@ -66,7 +71,7 @@ export class ProductComponent implements OnInit {
           }
         });
 
-      setInterval(() => { this.calcScore(); }, 100);
+      setInterval(() => { this.calcScore(); this.calcQuantite(); }, 100);
     }
 
     startFabrication() {
@@ -88,22 +93,35 @@ export class ProductComponent implements OnInit {
       switch(this._qtmulti){
         case "x1" : 
           this.NBachat = 1;
-          this.PT = this.product.cout*(this.product.croissance**this.product.quantite);
+          this.PT = this.product.cout*(this.product.croissance**(this.product.quantite-1));
           this.chCanBuy();
           break;
         case "x10" : 
           this.NBachat = 10;
-          this.PT = this.product.cout*this.product.croissance**this.NBachat;
+          this.PT = this.product.cout * ((1-this.product.croissance ** (this.NBachat))/(1-this.product.croissance));
           this.chCanBuy();
           break;
         case "x100" : 
           this.NBachat = 100;
-          this.PT = this.product.cout*this.product.croissance**this.NBachat;
+          this.PT = this.product.cout * ((1-this.product.croissance ** (this.NBachat))/(1-this.product.croissance));
           this.chCanBuy();
           break;
         case "xMax":
-        this.NBachat = Math.floor(Math.log(this._money/(this.product.cout))/Math.log(this.product.croissance)); //floor pour arrondir, et prise en compte de la croissance a chaque niveau avec les logs
-        this.PT = this.product.cout*this.product.croissance**this.NBachat;
+          //this.NBachat = Math.floor(Math.log(this._money/(this.product.cout))/Math.log(this.product.croissance)); //floor pour arrondir, et prise en compte de la croissance a chaque niveau avec les logs
+          this.qMax = Math.floor((Math.log(1-(this._money/this.product.cout)*(1-this.product.croissance)))/Math.log(this.product.croissance));
+          this.NBachat = this.qMax;
+          this.PT = this.product.cout * ((1-this.product.croissance ** (this.qMax))/(1-this.product.croissance));
+          //var _i = 0;
+          //do{
+          //  _i++;
+          //  this.PT = this.product.quantite*this.product.cout*this.product.croissance**_i;
+          //}while (this.PT<(this._money-this.product.cout*this.product.quantite))
+          //this.NBachat =_i;
+          if (this.NBachat<=0){
+            this.NBachat=1;
+            this.PT=this.product.cout*(this.product.croissance**(this.product.quantite-1));
+          }
+           
           this.chCanBuy();
           break;
         }
@@ -112,7 +130,8 @@ export class ProductComponent implements OnInit {
     calcScore() {
       if(this.product.managerUnlocked==true){
         this.startFabrication();
-        this.notifyProduction.emit(this.product);
+        this.product.timeleft -= Date.now() - this.lastupdate;
+        this.lastupdate = Date.now();
       }
       if (this.product.timeleft > 0) {
         this.product.timeleft -= Date.now() - this.lastupdate;
@@ -131,8 +150,12 @@ export class ProductComponent implements OnInit {
       this.calcMaxCanBuy();
     }
 
+    calcQuantite(): void {
+      this._qtmulti = this.calcMaxCanBuy()[0];
+      this._cout = this.calcMaxCanBuy()[1];
+    }
     chCanBuy(){
-      if (this.PT!=0 && this._money >= this.PT){
+      if (this.PT!=0 && this._money >= this.PT && this.NBachat!=0){
         this.canBuy = true;
       }else{
         this.canBuy = false;
