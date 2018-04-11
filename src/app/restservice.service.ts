@@ -13,8 +13,10 @@ export class RestserviceService {
     return Promise.reject(error.message || error);
    }
    getWorld(): Promise<World> {
-    return this.http.get(this.server + "webresources/generic/world")
-    .toPromise().then(response =>response.json()).catch(this.handleError);
+    return this.http.get(this.server + "webresources/generic/world", {
+   headers: this.setHeaders(this.user)})
+    .toPromise().then(response =>
+   response.json()).catch(this.handleError);
    };
    getUser():string{
      return this.user;
@@ -25,5 +27,12 @@ export class RestserviceService {
    getServer():string{
      return this.server;
    }
+
+   private setHeaders(user : string) : Headers {
+    var headers = new Headers();
+    headers.append("X-User",user);
+    return headers;
+   }
+   
    
 }

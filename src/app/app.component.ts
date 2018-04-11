@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Output,EventEmitter, Input } from '@angular/core';
 import { RestserviceService } from './restservice.service';
 import { World, Product, Pallier } from './world';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+
 
 
 @Component({
@@ -10,6 +11,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  username: string;
   title = 'app';
   world: World = new World();
   product: Product = new Product();
@@ -20,8 +22,9 @@ export class AppComponent {
   //seuil: number;
   toasterService: ToasterService;
   idmanager = 0;
-
+  @Output() notifyChange: EventEmitter<boolean> = new EventEmitter(true); 
   
+
   
   constructor(private service: RestserviceService, toasterService: ToasterService) {
   this.server = service.getServer();
@@ -105,7 +108,7 @@ hire(v: Pallier){
       if (v.unlocked=true){
         this.isHidden(v);
       }
-      this.idmanager+=1;
+      this.idmanager+=1; //du test
     }
 }
 
@@ -117,6 +120,14 @@ isHidden(v: Pallier){
   else{
     return false;
   }
+}
+
+
+onUsernameChanged(e: Event){
+  this.username = localStorage.getItem("username") + String(Math.floor(Math.random() * 10));
+  console.log(this.username);
+  localStorage.setItem("username", this.username);
+  this.notifyChange.emit(true);
 }
 
 }
