@@ -23,13 +23,10 @@ export class ProductComponent implements OnInit {
   revenu: number;
   _qtmulti: string;
   _money: any;
-  _cout:any;
+  //_cout:any;
   PT:number;
   NBachat: number; 
   canBuy= false;
-  PTbis: number;
-  PTter: number;
-  PTqua: number;
   qMax:any;
 
   @Input()
@@ -71,11 +68,11 @@ export class ProductComponent implements OnInit {
           }
         });
 
-      setInterval(() => { this.calcScore(); this.calcQuantite(); }, 100);
+      setInterval(() => { this.calcScore();}, 100);
     }
 
     startFabrication() {
-      if (this.product.timeleft <= 0) {
+      if (this.product.timeleft <= 0 &&this.product.quantite!=0) {
         this.progressbar.animate(1, { duration: this.product.vitesse });
         this.product.timeleft = this.product.vitesse;
         this.lastupdate = Date.now();
@@ -98,19 +95,23 @@ export class ProductComponent implements OnInit {
           break;
         case "x10" : 
           this.NBachat = 10;
-          this.PT = this.product.cout * ((1-this.product.croissance ** (this.NBachat))/(1-this.product.croissance));
+          this.PT = ((this.product.cout*(1-this.product.croissance**(this.product.quantite+this.NBachat+1)))/(1-this.product.croissance))-((this.product.cout*(1-this.product.croissance**(this.product.quantite+1)))/(1-this.product.croissance));
           this.chCanBuy();
           break;
         case "x100" : 
           this.NBachat = 100;
-          this.PT = this.product.cout * ((1-this.product.croissance ** (this.NBachat))/(1-this.product.croissance));
-          this.chCanBuy();
+          this.PT = ((this.product.cout*(1-this.product.croissance**(this.product.quantite+this.NBachat+1)))/(1-this.product.croissance))-((this.product.cout*(1-this.product.croissance**(this.product.quantite+1)))/(1-this.product.croissance));          this.chCanBuy();
           break;
         case "xMax":
           //this.NBachat = Math.floor(Math.log(this._money/(this.product.cout))/Math.log(this.product.croissance)); //floor pour arrondir, et prise en compte de la croissance a chaque niveau avec les logs
-          this.qMax = Math.floor((Math.log(1-(this._money/this.product.cout)*(1-this.product.croissance)))/Math.log(this.product.croissance));
-          this.NBachat = this.qMax;
-          this.PT = this.product.cout * ((1-this.product.croissance ** (this.qMax))/(1-this.product.croissance));
+          //this.qMax = Math.floor((Math.log(1-(this._money/((this.product.cout)*(1-this.product.croissance)*this.product.quantite))))/Math.log(this.product.croissance));
+          this.qMax = Math.ceil((Math.log(1-((this._money+this.product.cout*((1-this.product.croissance**(this.product.quantite+1))/1-this.product.croissance))/this.product.cout)*(1-this.product.croissance))/Math.log(this.product.croissance))-(this.product.quantite-2));
+          //this.qMax = Math.floor((Math.log(1-(this._money/this.product.cout)*(1-this.product.croissance)))/Math.log(this.product.croissance));
+          this.NBachat = this.qMax-2;
+          //console.log(this.qMax);
+          //this.PT = (this.product.cout * ((this.product.croissance ** (this.NBachat+this.product.quantite))/(this.product.croissance)));
+          this.PT = ((this.product.cout*(1-this.product.croissance**(this.product.quantite+this.NBachat)))/(1-this.product.croissance))-((this.product.cout*(1-this.product.croissance**(this.product.quantite+1)))/(1-this.product.croissance));          this.chCanBuy();
+          //console.log(this.PT);
           //var _i = 0;
           //do{
           //  _i++;
@@ -150,10 +151,6 @@ export class ProductComponent implements OnInit {
       this.calcMaxCanBuy();
     }
 
-    calcQuantite(): void {
-      this._qtmulti = this.calcMaxCanBuy()[0];
-      this._cout = this.calcMaxCanBuy()[1];
-    }
     chCanBuy(){
       if (this.PT!=0 && this._money >= this.PT && this.NBachat!=0){
         this.canBuy = true;
@@ -167,6 +164,7 @@ export class ProductComponent implements OnInit {
         this.product.quantite+=this.NBachat;
         //this._money-=this.PT
         this.notifyBuy.emit(this.PT);
+        
       }
     }
 

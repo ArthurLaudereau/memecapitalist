@@ -1,0 +1,22 @@
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.issou{
+    text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px #4c813b,
+                 0 0 5px #4c813b,
+                 0 1px 3px #4c813b,
+                 0 3px 5px #4c813b,
+                 0 5px 10px #4c813b,
+                 0 10px 10px #4c813b,
+                 0 20px 20px #4c813b;
+    font-size: 150%;
+    color: #0c375c;
+  }

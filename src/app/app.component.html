@@ -1,51 +1,69 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{world.name}}, in South 'Murica
-  </h1>
-  <span><img [attr.src]="server+world.logo" /></span>
+    <div class="row">
+        <h1 class="issou">
+            Welcome to {{world.name}}, in North 'Murica
+          </h1>
+          <br/>
+          <br/>
+      <div class="col-md-3 vcenter issou">
+          <div> <span [innerHTML]="world.money | bigvalue"> </span>  upvotes</div>
+      </div>
+      <div class="col-md-3 vcenter">
+        <span><img [attr.src]="server+world.logo" /></span>
+      </div>
+      <div class="col-md-3 vcenter kek">
+        <div class="row"></div>
+        <div class="row"><button type="button" class="btn btn-primary" (click)="changEtatBouton()">{{qt[qtmulti]}}</button></div>
+      </div>
+    </div>
 </div>
-<div> <span [innerHTML]="world.money | bigvalue"> </span></div>
-<div><button type="button" (click)="changEtatBouton()">{{qt[qtmulti]}}</button></div>
 
 <!-- managers -->
-<div class="buttonleft btn btn-primary btn-lg" data-toggle="modal" (click)="managersModal.show()" >Managers</div>
 <app-modal #managersModal>
-  <div class="app-modal-header">
-    <h4 class="modal-title">The crème of the crème</h4>
-  </div>
-  <div class="app-modal-body">
-    <div *ngFor="let manager of world.managers.pallier"> <!-- déclaration de la variable manager pour raccourcir! -->
-    <div [hidden]="isHidden(manager)"><img [attr.src]="server+manager.logo" />
-      <span><b>{{manager.name}}</b></span> <span>{{world.products.product[manager.idcible-1].name}}</span> <span><b>{{manager.seuil}}</b> upvotes</span>
-      <button type="button" [ngClass]="{'btn':true,'nouv':true}" (click)="hire(manager)">Hire !</button>
+    <div class="app-modal-header">
+      <h4 class="modal-title">The crème of the crème</h4>
     </div>
+    <div class="app-modal-body">
+      <div *ngFor="let manager of world.managers.pallier"> <!-- déclaration de la variable manager pour raccourcir! -->
+      <div [hidden]="isHidden(manager)"><img [attr.src]="server+manager.logo" />
+        <span><b>{{manager.name}}</b></span> <span>{{world.products.product[manager.idcible-1].name}}</span> <span><b>{{manager.seuil}}</b> upvotes</span>
+        <button type="button" [ngClass]="{'btn':true,'nouv':true}" (click)="hire(manager)">Hire !</button>
+      </div>
+      </div>
     </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-default" (click)="managersModal.hide()">Close</button>
+    </div>
+   </app-modal>
+  
+   <!-- produits -->
+  <div class="container-fluid">
+    <div class="row">
+        <app-product [serv]="server" [prod]="world.products.product[0]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+        class="product col-md-5" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+        <app-product [serv]="server" [prod]="world.products.product[1]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+        class="product col-md-5" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+    </div>
+    <div class="row">
+        <app-product [serv]="server" [prod]="world.products.product[2]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+        class="product col-md-5" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+        <app-product [serv]="server" [prod]="world.products.product[3]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+        class="product col-md-5" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+        <div class="col-md-1 btn btn-primary btn-lg pull-right vcenter marj" data-toggle="modal" (click)="managersModal.show()" ><span [hidden]="newmemeBadge()" class="badge">New meme</span> Managers</div>
+    </div>
+    <div class="row">
+        <app-product [serv]="server" [prod]="world.products.product[4]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+        class="product col-md-5" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+        <app-product [serv]="server" [prod]="world.products.product[5]" [qtmulti]="qt[qtmulti]" [money]="world.money"
+        class="product col-md-5" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
+    </div>
+    
+    <toaster-container></toaster-container>
   </div>
-  <div class="app-modal-footer">
-  <button type="button" class="btn btn-default" (click)="managersModal.hide()">Close</button>
-  </div>
- </app-modal>
-
- <!-- produits -->
-<div class="container-fluid">
-  <div class="row">
-      <app-product [serv]="server" [prod]="world.products.product[0]" [qtmulti]="qt[qtmulti]" [money]="world.money"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
-      <app-product [serv]="server" [prod]="world.products.product[1]" [qtmulti]="qt[qtmulti]" [money]="world.money"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
-  </div>
-  <div class="row">
-      <app-product [serv]="server" [prod]="world.products.product[2]" [qtmulti]="qt[qtmulti]" [money]="world.money"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
-      <app-product [serv]="server" [prod]="world.products.product[3]" [qtmulti]="qt[qtmulti]" [money]="world.money"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
-  </div>
-  <div class="row">
-      <app-product [serv]="server" [prod]="world.products.product[4]" [qtmulti]="qt[qtmulti]" [money]="world.money"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
-      <app-product [serv]="server" [prod]="world.products.product[5]" [qtmulti]="qt[qtmulti]" [money]="world.money"
-      class="product col-md-6" (notifyProduction)="onProductionDone($event)" (notifyBuy)="onBuy($event)"></app-product>
-  </div>
+<div class="row">
 </div>
+</body>
 

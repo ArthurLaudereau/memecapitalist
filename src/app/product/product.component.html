@@ -1,12 +1,10 @@
-<div>
-<span>{{product.name}}  {{product.quantite}}</span> 
-</div>
-<div class="row">
-    <div class="col-xs-3">
-<div (click)="startFabrication()" class="progress, lesecond" #bar [ngStyle]="{'background-image':'url('+server+product.logo+')','background-size':'cover'}"> </div>
-</div>
 
-<div class="col-xs-12">
+<div class="row">
+    <div class="col-xs-3 vcenter">
+        <div (click)="startFabrication()" class="progress, lesecond" #bar [ngStyle]="{'background-image':'url('+server+product.logo+')','background-size':'cover'}"> </div>
+    </div>
+    <div class="col-xs-4 vcenter issou">{{product.name}}  {{product.quantite}}</div>
+
     <button type="button" [ngClass]="{'disabled':!canBuy,'btn':true,'nouv':true}"  [innerHTML]="NBachat + 'x '+ ( PT |bigvalue )" (click)="buy()"></button>
     <button type="button" class="btn nouv">{{product.timeleft | date: 'mm:ss'}}</button>
 </div>

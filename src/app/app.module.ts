@@ -7,7 +7,8 @@ import { ProductComponent } from './product/product.component';
 import { RestserviceService } from './restservice.service';
 import { BigvaluePipe } from './bigvalue.pipe';
 import { ModalComponent } from './modal/modal.component';
-
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -17,9 +18,9 @@ import { ModalComponent } from './modal/modal.component';
     ModalComponent
   ],
   imports: [
-    BrowserModule, HttpModule
-  ],
-  providers: [RestserviceService],
+    BrowserModule, HttpModule, BrowserAnimationsModule, ToasterModule
+    ],
+  providers: [RestserviceService,ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
