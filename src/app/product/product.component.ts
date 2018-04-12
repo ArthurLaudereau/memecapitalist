@@ -105,7 +105,7 @@ export class ProductComponent implements OnInit {
         case "xMax":
           //this.NBachat = Math.floor(Math.log(this._money/(this.product.cout))/Math.log(this.product.croissance)); //floor pour arrondir, et prise en compte de la croissance a chaque niveau avec les logs
           //this.qMax = Math.floor((Math.log(1-(this._money/((this.product.cout)*(1-this.product.croissance)*this.product.quantite))))/Math.log(this.product.croissance));
-          this.qMax = Math.ceil((Math.log(1-((this._money+this.product.cout*((1-this.product.croissance**(this.product.quantite+1))/1-this.product.croissance))/this.product.cout)*(1-this.product.croissance))/Math.log(this.product.croissance))-(this.product.quantite-2));
+          this.qMax = Math.floor((Math.log(1-((this._money+this.product.cout*((1-this.product.croissance**(this.product.quantite+1))/1-this.product.croissance))/this.product.cout)*(1-this.product.croissance))/Math.log(this.product.croissance))-(this.product.quantite-2));
           //this.qMax = Math.floor((Math.log(1-(this._money/this.product.cout)*(1-this.product.croissance)))/Math.log(this.product.croissance));
           this.NBachat = this.qMax-2;
           //console.log(this.qMax);
